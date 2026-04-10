@@ -4,7 +4,7 @@ import { NextRequest } from 'next/server';
 export const dynamic = 'force-dynamic';
 
 export async function GET() {
-  const logs = getTodayLogs();
+  const logs = await getTodayLogs();
   return Response.json(logs);
 }
 
@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
     return Response.json({ error: 'amount must be a positive number' }, { status: 400 });
   }
 
-  const log = addIntake(type, amount, unit, source, note);
+  const log = await addIntake(type, amount, unit, source, note);
   return Response.json(log, { status: 201 });
 }
 
@@ -37,7 +37,7 @@ export async function DELETE(request: NextRequest) {
     return Response.json({ error: 'id is required' }, { status: 400 });
   }
 
-  const success = deleteIntake(parseInt(id));
+  const success = await deleteIntake(parseInt(id));
   if (!success) {
     return Response.json({ error: 'Log not found' }, { status: 404 });
   }

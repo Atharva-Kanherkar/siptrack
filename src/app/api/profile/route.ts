@@ -4,7 +4,7 @@ import { NextRequest } from 'next/server';
 export const dynamic = 'force-dynamic';
 
 export async function GET() {
-  const profile = getProfile();
+  const profile = await getProfile();
   if (!profile) {
     return Response.json({ profile: null, recommendations: null });
   }
@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
     return Response.json({ error: 'All fields are required' }, { status: 400 });
   }
 
-  const profile = saveProfile({ weight_kg, height_cm, age, sex, activity_level, goal });
+  const profile = await saveProfile({ weight_kg, height_cm, age, sex, activity_level, goal });
   const recommendations = calculateRecommendations({ weight_kg, height_cm, age, sex, activity_level, goal });
 
   return Response.json({ profile, recommendations });

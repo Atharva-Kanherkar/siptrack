@@ -4,7 +4,7 @@ import { NextRequest } from 'next/server';
 export const dynamic = 'force-dynamic';
 
 export async function GET() {
-  const goals = getGoals();
+  const goals = await getGoals();
   return Response.json(goals);
 }
 
@@ -20,6 +20,6 @@ export async function PUT(request: NextRequest) {
     return Response.json({ error: 'target must be a positive number' }, { status: 400 });
   }
 
-  const goal = updateGoal(type, target);
+  const goal = await updateGoal(type, target);
   return Response.json(goal);
 }

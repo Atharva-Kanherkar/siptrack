@@ -6,17 +6,17 @@ export const dynamic = 'force-dynamic';
 export async function POST() {
   const apiKey = process.env.OPENAI_API_KEY;
 
-  const totals = getTodayTotals();
-  const goals = getGoals();
-  const activeCaffeine = getCurrentCaffeineLevel();
-  const hourly = getTodayHourly();
-  const profile = getProfile();
+  const totals = await getTodayTotals();
+  const goals = await getGoals();
+  const activeCaffeine = await getCurrentCaffeineLevel();
+  const hourly = await getTodayHourly();
+  const profile = await getProfile();
 
   // Get last 7 days of data
   const now = new Date();
   const weekAgo = new Date(now);
   weekAgo.setDate(weekAgo.getDate() - 7);
-  const dailyTotals = getDailyTotals(
+  const dailyTotals = await getDailyTotals(
     weekAgo.toISOString().split('T')[0],
     now.toISOString().split('T')[0]
   );

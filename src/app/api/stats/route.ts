@@ -7,10 +7,10 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const range = searchParams.get('range') || 'today';
 
-  const totals = getTodayTotals();
-  const goals = getGoals();
-  const activeCaffeine = getCurrentCaffeineLevel();
-  const hourly = getTodayHourly();
+  const totals = await getTodayTotals();
+  const goals = await getGoals();
+  const activeCaffeine = await getCurrentCaffeineLevel();
+  const hourly = await getTodayHourly();
 
   // Calculate date range for historical data
   const now = new Date();
@@ -28,7 +28,7 @@ export async function GET(request: NextRequest) {
   }
   const endDate = now.toISOString().split('T')[0];
 
-  const dailyTotals = range !== 'today' ? getDailyTotals(startDate, endDate) : [];
+  const dailyTotals = range !== 'today' ? await getDailyTotals(startDate, endDate) : [];
 
   // Calculate calories from macros
   const protein = totals['protein'] || 0;
