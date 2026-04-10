@@ -1,26 +1,208 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0a0e1a;
+  --foreground: #e2e8f0;
+  --card: rgba(15, 23, 42, 0.8);
+  --card-border: rgba(56, 189, 248, 0.1);
+  --water-blue: #38bdf8;
+  --water-dark: #0284c7;
+  --caffeine-amber: #f59e0b;
+  --caffeine-dark: #92400e;
+  --protein-green: #10b981;
+  --carbs-yellow: #eab308;
+  --fat-red: #ef4444;
+  --accent: #818cf8;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-water: var(--water-blue);
+  --color-water-dark: var(--water-dark);
+  --color-caffeine: var(--caffeine-amber);
+  --color-protein: var(--protein-green);
+  --color-carbs: var(--carbs-yellow);
+  --color-fat: var(--fat-red);
+  --color-accent: var(--accent);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
 }
+
+/* ===== Wave Animation ===== */
+@keyframes wave {
+  0% { transform: translateX(0) translateZ(0) scaleY(1); }
+  50% { transform: translateX(-25%) translateZ(0) scaleY(0.55); }
+  100% { transform: translateX(-50%) translateZ(0) scaleY(1); }
+}
+
+@keyframes wave2 {
+  0% { transform: translateX(0) translateZ(0) scaleY(1); }
+  50% { transform: translateX(25%) translateZ(0) scaleY(0.65); }
+  100% { transform: translateX(50%) translateZ(0) scaleY(1); }
+}
+
+.wave-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem;
+}
+
+.wave {
+  position: absolute;
+  bottom: 0;
+  left: -50%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(to top, rgba(56, 189, 248, 0.3), transparent);
+  animation: wave 6s ease-in-out infinite;
+}
+
+.wave:nth-child(2) {
+  animation: wave2 7s ease-in-out infinite;
+  opacity: 0.5;
+  background: linear-gradient(to top, rgba(56, 189, 248, 0.2), transparent);
+}
+
+/* ===== Water Bottle ===== */
+@keyframes fillUp {
+  from { height: 0%; }
+}
+
+@keyframes bubbleRise {
+  0% { transform: translateY(0) scale(1); opacity: 0.7; }
+  100% { transform: translateY(-120px) scale(0.3); opacity: 0; }
+}
+
+.water-fill {
+  transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bubble {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  animation: bubbleRise 2s ease-out forwards;
+}
+
+/* ===== Ripple Effect ===== */
+@keyframes ripple {
+  0% { transform: scale(0); opacity: 0.6; }
+  100% { transform: scale(4); opacity: 0; }
+}
+
+.ripple-effect {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(56, 189, 248, 0.4);
+  animation: ripple 0.6s ease-out forwards;
+}
+
+/* ===== Pulse Glow ===== */
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 5px rgba(56, 189, 248, 0.3); }
+  50% { box-shadow: 0 0 20px rgba(56, 189, 248, 0.6), 0 0 40px rgba(56, 189, 248, 0.2); }
+}
+
+.pulse-glow {
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+/* ===== Notification Pulse ===== */
+@keyframes notifPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.notif-pulse {
+  animation: notifPulse 1s ease-in-out infinite;
+}
+
+/* ===== Shimmer ===== */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.shimmer {
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.05) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 3s infinite;
+}
+
+/* ===== Glass Card ===== */
+.glass-card {
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(56, 189, 248, 0.1);
+  border-radius: 1rem;
+}
+
+.glass-card:hover {
+  border-color: rgba(56, 189, 248, 0.2);
+}
+
+/* ===== Progress Ring ===== */
+@keyframes progressFill {
+  from { stroke-dashoffset: 283; }
+}
+
+.progress-ring-circle {
+  transition: stroke-dashoffset 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
+
+/* ===== Sip Button ===== */
+@keyframes dropletFall {
+  0% { transform: translateY(-10px) scale(0); opacity: 1; }
+  60% { transform: translateY(20px) scale(1); opacity: 0.8; }
+  100% { transform: translateY(40px) scale(0.5); opacity: 0; }
+}
+
+/* ===== Coffee Steam ===== */
+@keyframes steam {
+  0% { transform: translateY(0) scaleX(1); opacity: 0.4; }
+  50% { transform: translateY(-15px) scaleX(1.5); opacity: 0.2; }
+  100% { transform: translateY(-30px) scaleX(0.8); opacity: 0; }
+}
+
+.steam-line {
+  animation: steam 2s ease-out infinite;
+}
+
+.steam-line:nth-child(2) { animation-delay: 0.5s; }
+.steam-line:nth-child(3) { animation-delay: 1s; }
+
+/* ===== Confetti ===== */
+@keyframes confettiFall {
+  0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+/* ===== Scrollbar ===== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(56, 189, 248, 0.2); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(56, 189, 248, 0.4); }
+
+/* ===== Toast ===== */
+@keyframes slideInRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideOutRight {
+  from { transform: translateX(0); opacity: 1; }
+  to { transform: translateX(100%); opacity: 0; }
+}
+
+.toast-enter { animation: slideInRight 0.3s ease-out forwards; }
+.toast-exit { animation: slideOutRight 0.3s ease-in forwards; }
